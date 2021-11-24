@@ -1,82 +1,51 @@
-var depositBtn = document.getElementById("depositBtn");
-var withdrawBtn = document.getElementById("withdrawBtn");
 
+const myFunction = (id1,id2) => {
+    var forEmptyInput = document.getElementById(id1);
+    var finalDeposit = document.getElementById(id2);
+    let depositInput = parseFloat(document.getElementById(id1).value);
+    let totalDeposit = parseFloat(document.getElementById(id2).innerText);
+if(depositInput > 0){
+    totalDeposit += depositInput;
 
-// Deposit function here 
-const deposit = (id) => {
-    let depositAmmount = parseInt(document.getElementById(id).value);
-    document.getElementById(id).value = "";
-    return depositAmmount;
+    finalDeposit.innerHTML = totalDeposit;
+    
+    return depositInput;
+}
+forEmptyInput.value = '';
 }
 
-// totalDeposit function 
-const totalDeposit = (id, ammount) => {
-    let totalDeposit = parseInt(document.getElementById(id).innerHTML);
-    let h = document.getElementById(id).innerHTML;
+// UPDATE BALANCE FUNCTION 
+const updateBalance = (ammount,isTrue) => {
+    var totalBalance = document.getElementById('totalBalance');
+    var balanceNumber = parseFloat(document.getElementById('totalBalance').innerText);
+    if(ammount > 0 && isTrue){
+        balanceNumber += ammount;
+        totalBalance.innerText = balanceNumber;
+        
+    }else if(ammount > 0 && !isTrue){
+        balanceNumber -= ammount;
+        totalBalance.innerText = balanceNumber;
+    }else{
 
-    if(ammount > 0){
-        totalDeposit += ammount;
-        h.innerHTML = totalDeposit;
-        return totalDeposit;
     }
     
 }
 
-// calculation part total ammount 
-
-const calculation = (ammount, isTrue) => {
-    let totalBalance = parseInt(document.getElementById("totalBalance").innerHTML);
-
-    if(ammount > 0 && isTrue){
-        totalBalance += ammount;
-        document.getElementById("totalBalance").innerHTML = totalBalance;
-    }
-
-}
 
 
-depositBtn.addEventListener("click",() => {
-    let depositAmmount = deposit('depositAmmount');
-    let totaldeposit = totalDeposit('totalDeposit',depositAmmount);
+document.getElementById('depositBtn').addEventListener('click',() => {
 
-    calculation(depositAmmount,true)
-
-
-
-
-    // let totalBalance = parseInt(document.getElementById("totalBalance").innerHTML);
-
-
-    // if(depositAmmount){
-    //     totalBalance += depositAmmount;
-    //     document.getElementById("totalDeposit").innerHTML = totaldeposit;
-    //     document.getElementById("totalBalance").innerHTML = totalBalance;
-
-
-    // }else{
-
-        
-    // }
+  let depositValue = myFunction('depositAmmount','totalDeposit')
+  updateBalance(depositValue,true);
+    
 
 })
 
+document.getElementById('withdrawBtn').addEventListener('click',() => {
 
-// withdrawBtn.addEventListener('click',() => {
-//     let withdrawAmmount = deposit('withdrawAmmount');
-//     let totalWithdraw = totalDeposit('totalWithdraw');
-//     let totalBalance = parseInt(document.getElementById("totalBalance").innerHTML);
-
-
-//     if(withdrawAmmount){
-//         totalWithdraw += withdrawAmmount;
-//         totalBalance -= withdrawAmmount;
-//         document.getElementById("totalWithdraw").innerHTML = totalWithdraw;
-//         document.getElementById("totalBalance").innerHTML = totalBalance;
-
-
-//     }else{
-
-        
-//     }
-
-// })
+    let depositValue =myFunction('withdrawAmmount','withdraw');
+    updateBalance(depositValue,false);
+    
+      
+  
+  })
